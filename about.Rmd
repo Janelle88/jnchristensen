@@ -1,10 +1,18 @@
 ---
-title: "About this site"
+title: "About"
 description: |
-  Some additional details about the website
+  More about me.
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+### Interests
+
+As someone who has been in the scientific field for my whole life, I think that we as scientists need to start doing a better job communicating to audiences outside of the scientific field. In my degree program, I'm focusing in communications to tackle this exact problem. I love working with data and making it into a story so that people can understand why it matters to them and the places they care about.
+
+### Experience
+
+
+I've spent the past two years working with data and am comfortable with R. Over the summer I help a fellowship as a park of the Scientists in the Parks program for Yellowstone National Park. See this video to learn a little about what I did.
