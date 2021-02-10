@@ -1,0 +1,17 @@
+---
+title: "Welcome."
+author:
+  - name: Janelle C
+date: 02-09-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This part of my site is intended to display some of my previous work. I've done work and am comfortable with R, R Shiny, RMarkdown, ArcGIS, and of course, the {postcards} and {distill} packages. I hope you have fun exploring, I had fun creating.
+

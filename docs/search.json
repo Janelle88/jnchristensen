@@ -5,22 +5,22 @@
       "title": "About this site",
       "description": "Some additional details about the website",
       "author": [],
-      "contents": "\n\n\n\n",
-      "last_modified": "2021-02-09T10:40:09-08:00"
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-02-09T14:02:39-08:00"
     },
     {
       "path": "blog.html",
       "title": "Blog",
       "author": [],
-      "contents": "\n\n\n\n",
-      "last_modified": "2021-02-09T10:40:10-08:00"
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-02-09T14:02:41-08:00"
     },
     {
       "path": "index.html",
-      "title": "Allison!",
+      "title": "Janelle Christensen",
       "author": [],
-      "contents": "\n\n          \n          \n          Allison Horst\n          \n          \n          Home\n          About\n          Blog\n          ☰\n          \n          \n      \n        \n          \n            Allison!\n          \n          \n            \n              I am a classically trained data scientist living in the San Francisco Bay Area. Currently I work on the Oculus team at Facebook. I love talking about baseball, true crime podcasts, and causal inference.\n            \n            \n              I am a classically trained data scientist living in the San Francisco Bay Area. Currently I work on the Oculus team at Facebook. I love talking about baseball, true crime podcasts, and causal inference.\n            \n          \n\n          \n            \n              \n                  \n                    \n                      LinkedIn\n                    \n                  \n                \n                                \n                  \n                    \n                      Twitter\n                    \n                  \n                \n                                \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Email\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    LinkedIn\n                  \n                \n                                \n                  \n                    Twitter\n                  \n                \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Email\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
-      "last_modified": "2021-02-09T10:40:10-08:00"
+      "contents": "\r\n\r\n          \r\n      \r\n      Janelle Christensen\r\n      \r\n      \r\n      Home\r\n      About\r\n      Projects\r\n      ☰\r\n      \r\n      \r\n      \r\n        \r\n          \r\n            \r\n              \r\n            \r\n              Janelle Christensen\r\n            \r\n            \r\n              \r\n                \r\n                    \r\n                      \r\n                        LinkedIn\r\n                      \r\n                    \r\n                  \r\n                                    \r\n                    \r\n                      \r\n                        Blog\r\n                      \r\n                    \r\n                  \r\n                                    \r\n                    \r\n                      \r\n                        GitHub\r\n                      \r\n                    \r\n                  \r\n                                    \r\n                    \r\n                      \r\n                        Email\r\n                      \r\n                    \r\n                  \r\n                                  \r\n            \r\n          \r\n        \r\n        \r\n        \r\n          \r\n            Graduate student studying water resources management at the Bren School of Environmental Science and Management. Data scientist. Outdoor enthusiast. Lover of nature. Crafter of knitted and baked goods. Mediocre player of ukulele. Dog mom.\r\n          \r\n        \r\n      \r\n    \r\n\r\n    \r\n      \r\n        \r\n          \r\n            \r\n              \r\n            \r\n              Janelle Christensen\r\n            \r\n            \r\n              \r\n                \r\n                                    \r\n                    \r\n                      LinkedIn\r\n                    \r\n                  \r\n                                    \r\n                    \r\n                      Blog\r\n                    \r\n                  \r\n                                    \r\n                    \r\n                      GitHub\r\n                    \r\n                  \r\n                                    \r\n                    \r\n                      Email\r\n                    \r\n                  \r\n                                  \r\n              \r\n            \r\n            \r\n              Graduate student studying water resources management at the Bren School of Environmental Science and Management. Data scientist. Outdoor enthusiast. Lover of nature. Crafter of knitted and baked goods. Mediocre player of ukulele. Dog mom.\r\n            \r\n        \r\n      \r\n    \r\n\r\n    \r\n    \r\n    ",
+      "last_modified": "2021-02-09T14:02:41-08:00"
     }
   ],
   "collections": ["posts/posts.json"]

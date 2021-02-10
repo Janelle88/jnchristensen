@@ -1,20 +1,18 @@
 ---
-title: "Allison!"
-image: "horst_pic.jpg"
+title: "Janelle Christensen"
+image: "janelle2.jpg"
 links:
   - label: LinkedIn
-    url: "https://linkedin.com/"
-  - label: Twitter
-    url: "https://twitter.com/"
+    url: "https://www.linkedin.com/in/janelle-christensen/"
+  - label: Blog
+    url: "https://environmentalistabroad.wordpress.com/"
   - label: GitHub
-    url: "https://github.com/"
+    url: "https://github.com/Janelle88"
   - label: Email
-    url: "mailto:email@email.com"
+    url: "mailto:jnchristensen1788@gmail.com"
 output:
-  postcards::jolla
+  postcards::trestles
 site: distill::distill_website
 ---
  
-I am a classically trained data scientist living in the San Francisco Bay Area. 
-Currently I work on the Oculus team at Facebook. I love talking about baseball, 
-true crime podcasts, and causal inference.
+Graduate student studying water resources management at the Bren School of Environmental Science and Management. Data scientist. Outdoor enthusiast. Lover of nature. Crafter of knitted and baked goods. Mediocre player of ukulele. Dog mom.

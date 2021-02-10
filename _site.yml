@@ -1,7 +1,7 @@
 name: "."
-title: "Allison Horst"
+title: "Janelle Christensen"
 description: |
-  Allison Horst
+  Janelle Christensen
 output_dir: "docs"
 navbar:
   right:
@@ -9,6 +9,6 @@ navbar:
       href: index.html
     - text: "About"
       href: about.html
-    - text: "Blog"      # add
+    - text: "Projects"      # add
       href: blog.html   # add
 output: distill::distill_article

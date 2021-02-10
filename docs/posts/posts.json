@@ -1,36 +1,19 @@
 [
   {
-    "path": "posts/2021-01-28-hello/",
-    "title": "Hello",
-    "description": "A short description of the post.",
+    "path": "posts/2021-02-09-welcome/",
+    "title": "Welcome.",
+    "description": {},
     "author": [
       {
-        "name": "Allison Horst",
+        "name": "Janelle C",
         "url": {}
       }
     ],
-    "date": "2021-01-28",
+    "date": "2021-02-09",
     "categories": [],
-    "contents": "\nDistill is a publication format for scientific and technical writing, native to the web.\nLearn more about using Distill at https://rstudio.github.io/distill.\n\n\n\n",
+    "contents": "\r\nThis part of my site is intended to display some of my previous work. I’ve done work and am comfortable with R, R Shiny, RMarkdown, ArcGIS, and of course, the {postcards} and {distill} packages. I hope you have fun exploring, I had fun creating.\r\n\r\n\r\n\r\n",
     "preview": {},
-    "last_modified": "2021-01-28T13:53:04-08:00",
-    "input_file": {}
-  },
-  {
-    "path": "posts/2021-01-19-my-new-post/",
-    "title": "my new post",
-    "description": "A short description of the post.",
-    "author": [
-      {
-        "name": "Allison Horst",
-        "url": {}
-      }
-    ],
-    "date": "2021-01-19",
-    "categories": [],
-    "contents": "\nDistill is a publication format for scientific and technical writing, native to the web.\nLearn more about using Distill at https://rstudio.github.io/distill.\n\n\n\n",
-    "preview": {},
-    "last_modified": "2021-01-28T13:54:29-08:00",
+    "last_modified": "2021-02-09T13:56:36-08:00",
     "input_file": {}
   }
 ]
