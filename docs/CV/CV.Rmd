@@ -1,7 +1,7 @@
 ---
 name: Janelle
 surname: Christensen
-position: "Studen"
+position: "Student"
 address: "Goleta, CA"
 phone: +1 818 456 8137
 www: https://janelle88.github.io/jnchristensen/
