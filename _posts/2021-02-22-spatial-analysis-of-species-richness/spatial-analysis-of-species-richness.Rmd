@@ -1,0 +1,86 @@
+---
+title: "Spatial Analysis Using Raster Data"
+description: |
+  Species richness of cetaceans along the California coast.
+author:
+  - name: Janelle C
+    url: {}
+date: 2021-02-22
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: hide
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(raster)
+library(tidyverse)
+library(here)
+library(sf)
+library(fasterize)
+library(rnaturalearth)
+```
+
+## Cetacean Data
+
+Read in cetacean data using `raster::stack()` and explore using the `plot()` function.
+
+```{r, fig.cap="Figure 1. Species abundance along the California costline. Higher levels of presence are shown in green and lower levels shown in pink."}
+my_files <- list.files(path = "ca_cetaceans", full.names = TRUE)
+
+cetaceans <- raster::stack(my_files)
+
+plot(cetaceans)
+```
+
+## Presence and Threshold
+
+Create a function to Set a threshold for the presence of the species at 0.6, and assign a value for 1 if present or 0 if not not.
+```{r, fig.cap="Figure 2. Presence of species on the California coast. Areas colored in yellow have an abundance higher than 0.6. Areas that are not colored in are either lower than 0.6 or did not show any signs of named species in that cell."}
+
+is_present <- function(x, thresh = .6) {
+  y <- ifelse(x >= thresh, 1, NA)
+  return(y)
+}
+
+cetaceans_present <- calc(cetaceans, fun = is_present)
+
+plot(cetaceans_present)
+
+```
+
+## Finalized plot of species richness
+
+```{r, fig.cap="Figure 3. Species richness of cetaceans on the California coast. Areas colored in darker green have higher richness, and lighter areas have lower richness."}
+
+cetaceans_df <- raster::rasterToPoints(cetaceans_present) %>% 
+  as.data.frame() %>% 
+  pivot_longer(cols = Balaenoptera_acutorostrata:Ziphius_cavirostris,
+               names_to = "species",
+               values_to = "present") %>%
+  group_by(x, y) %>% 
+  replace_na(list(present = 0)) %>% 
+  filter(present == 1) %>% 
+  count(present)
+
+world <- ne_countries(scale='medium',returnclass = 'sf')
+
+
+ggplot() +
+  geom_raster(data = cetaceans_df, aes(x = x, y = y, fill = n)) +
+  geom_sf(data = world) +
+  coord_sf(expand = 0, xlim = c(-125, -115), ylim = c(32, 38)) +
+  theme_void() +
+  scale_fill_gradientn(colors = c("lightblue1", "aquamarine4")) +
+  theme(legend.position = c(0.85, 0.8),
+        legend.background = element_rect(fill = "gray75", linetype = "solid"),
+        legend.key.size = unit(0.5, "cm"),
+        legend.key.width = unit(0.5,"cm"),
+        legend.margin=margin(t = 0.2, b = 0.2, l = 0.2, r = 0.2, unit='cm'),
+        plot.margin = unit(c(0,0,0,0), units = "cm")) +
+  labs(fill = "Species Richness") 
+
+```
