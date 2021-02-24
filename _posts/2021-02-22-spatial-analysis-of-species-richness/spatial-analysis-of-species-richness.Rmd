@@ -22,6 +22,7 @@ library(here)
 library(sf)
 library(fasterize)
 library(rnaturalearth)
+library(ggspatial)
 ```
 
 ## Cetacean Data
@@ -38,7 +39,10 @@ plot(cetaceans)
 
 ## Presence and Threshold
 
+
 Create a function to Set a threshold for the presence of the species at 0.6, and assign a value for 1 if present or 0 if not not.
+
+
 ```{r, fig.cap="Figure 2. Presence of species on the California coast. Areas colored in yellow have an abundance higher than 0.6. Areas that are not colored in are either lower than 0.6 or did not show any signs of named species in that cell."}
 
 is_present <- function(x, thresh = .6) {
@@ -81,6 +85,8 @@ ggplot() +
         legend.key.width = unit(0.5,"cm"),
         legend.margin=margin(t = 0.2, b = 0.2, l = 0.2, r = 0.2, unit='cm'),
         plot.margin = unit(c(0,0,0,0), units = "cm")) +
-  labs(fill = "Species Richness") 
+  labs(fill = "Species Richness") +
+  annotation_scale(pad_x = unit(7.5, "cm"), aes(unit_category = "imperial", style = "bar")) +
+  annotation_north_arrow(height = unit(1.5, "cm"), width = unit(1.5, "cm"), style = north_arrow_nautical())
 
 ```
