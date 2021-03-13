@@ -1,0 +1,157 @@
+---
+title: "Binomial Logistic Regression"
+description: |
+  An analysis of different palmetto species
+author:
+  - name: Janelle C
+    url: {}
+date: 2021-02-03
+output:
+  distill::distill_article:
+    self_contained: false
+    code_folding: hide
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(GGally)
+library(broom)
+library(jtools)
+library(here)
+```
+
+```{r}
+
+palmetto <- read_csv("palmetto.csv") %>% 
+  mutate(species = as.factor(species))
+
+```
+
+
+
+### Section 1
+
+#### Graph 1.
+
+```{r, fig.cap="Figure 1. Comparing length and width of two species of palmetto _Sabal etonia_ and _Serenoa repens_. _Serenoa repens_ is shown in dark green and _Sabal etonia_ is shown in light green."}
+
+spp_labs <- c("Serenoa repens", "Sabal etonia")
+names(spp_labs) <- c("1", "2")
+  
+ggplot(data = palmetto, aes(x = width, y = length)) +
+  geom_point(aes(color = species), alpha = 0.5) +
+  facet_wrap(~species,
+             labeller = labeller(species = spp_labs)) +
+  theme_minimal() + 
+  scale_color_manual(values = c("chartreuse4", "yellowgreen")) +
+  theme(legend.position = "none",
+        panel.border = element_rect(fill = NA),
+        strip.text.x = element_text(face = "italic")) +
+  labs(x = "Widest width of the canopy, perpindicular to length (cm)", y = "Widest length of the canopy (cm)")
+
+```
+
+
+Both *Sabal etonia* and *Serenoa repens* seem to  cluster around the same width to length ratio, but *Sabal etonia* tends towards being slightly longer at shorter widths.
+
+#### Graph 2.
+
+```{r, fig.cap="Figure 2. Comparison of number of green leaves versus height in two species of plametto _Serenoa repens_ and _Sabal etonia_. Lower numbers of leaves are represented in light green and higher numbers in dark green."}
+
+ggplot(data = palmetto, aes(x = green_lvs, y = height)) +
+  geom_jitter(aes(color = green_lvs),
+              alpha = 0.5) +
+  facet_wrap(~species,
+             labeller = labeller(species = spp_labs)) +
+  theme_minimal() + 
+  scale_color_gradientn(colors = c("greenyellow","chartreuse4", "olivedrab4")) +
+  theme(legend.position = "none",
+        panel.border = element_rect(fill = NA),
+        strip.text.x = element_text(face = "italic")) +
+  labs(x = "Green Leaves (n)", y = "Maximum height (cm)")
+
+```
+*Sabal etonia* produces fewer leaves in general, but it produces more leaves when it is a shorter palmetto than *Serenoa repens*.
+
+### Section 2
+```{r}
+palmetto_blr <- glm(species ~ height + length + width + green_lvs,
+                            data = palmetto, 
+                            family = "binomial") 
+
+# summary(palmetto_blr)
+# levels(palmetto$species)
+# serenoa repens is coded as 0, sabal etonia is coded as 1
+
+palmetto_tidy <- palmetto_blr %>% 
+  broom::tidy() %>% 
+  select(estimate, std.error, p.value) %>%
+  mutate_if(is.numeric, funs(as.character(signif(., 3))))
+
+rownames(palmetto_tidy) <- c("Intercept",
+                  "Height (cm)",
+                  "Length (cm)",
+                  "Width (cm)",
+                  "Green Leaves (n)")
+
+
+  kableExtra::kable(palmetto_tidy,
+                    col.names = c("Coefficient",
+                                  "Standard Error",
+                                  "p-value"),
+                    caption = "_Table 1._ Binomial logistic regression of _serenoa repens_ and *sabal etonia* in which _sabal etonia_ is the reference level.") %>%
+# Column names - can't change row names in kable.
+  kableExtra::kable_styling(bootstrap_options = "striped",
+                full_width = F,
+                position = "center") %>%
+# Full width (F), centered table.
+  kableExtra::add_header_above(bold = TRUE,
+                   line = TRUE,
+                   c("Binomial Logistic Regression for _Serenoa repens_ and _Sabal etonia_" = 4))
+
+
+
+```
+
+
+### Section 3
+
+
+```{r}
+
+blr_fitted <- palmetto_blr %>% 
+  broom::augment(type.predict = "response") %>% 
+  mutate(predicted = ifelse(.fitted >= 0.5, "sabal", "serenoa")) %>% 
+  mutate(correct = ifelse(predicted == "sabal" & species == 2, "predicted_correctly",
+                          ifelse(predicted == "serenoa" & species == 1, "predicted_correctly", "predicted_incorrectly"))) 
+
+palmetto_table <- blr_fitted %>% 
+  count(correct, species) %>% 
+  pivot_wider(names_from = correct, 
+              values_from = n) %>% 
+  mutate(percent = (predicted_correctly / (predicted_correctly + predicted_incorrectly)) * 100) %>% 
+  mutate(across(is.numeric, ~ round(., 2))) %>% 
+  mutate(species = c("Serenoa repens",
+                   "Sabal etonia")) %>%
+  kableExtra::kable(col.names = c("Species",
+                      "Predicted correctly",
+                      "Predicted incorrectly",
+                      "Predicted correctly (%)"),
+                caption = "_Table 2._ Predictions of _Serenoa repens_ and _Sabal etonia_ using bionomial logistic regression. Percent predicted correctly is the percentage of observations that the model correctly classified as the species that was observed") %>%
+# Column names - can't change row names in kable.
+  kableExtra::kable_styling(bootstrap_options = "striped",
+                full_width = F,
+                position = "center") %>%
+# Full width (F), centered table.
+  kableExtra::add_header_above(bold = TRUE,
+                   line = TRUE,
+                   c("Prediction for _Serenoa repens_ and _Sabal etonia_ using binomial logistic regression" = 4))
+
+
+palmetto_table
+  
+
+```
+
