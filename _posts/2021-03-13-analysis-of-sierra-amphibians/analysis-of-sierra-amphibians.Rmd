@@ -1,0 +1,108 @@
+---
+title: "Analysis of Sierra Amphibians"
+description: |
+  Ampibian counts and use of `patchwork`
+author:
+  - name: Janelle C
+    url: {}
+date: 2021-01-21
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(readxl)
+library(patchwork)
+
+```
+
+### Read in the data
+```{r}
+
+sierra_df <- readxl::read_xlsx("sierra_amphibians.xlsx")
+
+```
+### Task 1.1
+
+A graph of total mountain yellow-legged frog (*Rana muscosa*) count each year across all water bodies, by life stage excluding the ‘EggMass’ level. 
+
+```{r}
+
+ramu_df <- sierra_df %>% 
+  filter(amphibian_species == "RAMU") %>% 
+  filter(!amphibian_life_stage == "EggMass") %>% 
+  mutate(survey_date = lubridate::ymd(survey_date)) %>% 
+  mutate(year = year(survey_date)) %>% 
+  group_by(year) %>% 
+  count(amphibian_life_stage, wt = amphibian_number)
+#wt = amphibian number essentially performs the uncount function within the count function
+
+ramu_plot <- ggplot(ramu_df, aes(x = year, y = n)) +
+  geom_col(aes(fill = year), color = "black", show.legend = FALSE) +
+  scale_fill_gradientn(colours = c("gold","darkgoldenrod3", "darkolivegreen4") ) +
+  facet_wrap(~amphibian_life_stage, scales = "free") + #without scales = "free" the numbers are a bit hard to see for the lifestages other than tadpole
+  theme_minimal() +
+  labs(title = expression(paste("Count of mountain yellow-legged frog (", italic("Rana muscosa"), ") by lifestage")),
+       x = NULL,
+       y = "Count") +
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.5))
+
+
+
+```
+
+### Task 1.2
+
+A column graph containing total counts (over all years of the study) of combined adult and subadult endangered mountain yellow-legged frogs (*Rana muscosa*) observed in the 5 lakes with the greatest total observed counts.
+
+```{r}
+
+lake_df <- sierra_df %>% 
+  filter(amphibian_species == "RAMU") %>% 
+  filter(!amphibian_life_stage %in% c("EggMass", "Tadpole")) %>% 
+  mutate(lake_number = paste("Lake", lake_id)) %>% 
+  group_by(lake_number) %>% 
+  count(amphibian_life_stage, wt = amphibian_number) 
+#wt = amphibian number essentially performs the uncount function within the count function
+
+lake_df_top_5 <- lake_df %>% 
+  count(lake_number, wt = n) %>% 
+  ungroup(lake_number) %>% 
+  rename(amphibian_count = n) %>% 
+  slice_max(amphibian_count, n = 5)
+
+lake_df_lifestage <- lake_df %>% 
+  inner_join(lake_df_top_5) %>% 
+  rename(lifestage_count = n) 
+
+lake_plot <- ggplot(lake_df_lifestage, aes(y = lifestage_count, x = fct_reorder(lake_number, lifestage_count))) +
+  geom_bar(position = "stack", stat = "identity", aes(fill = amphibian_life_stage)) +
+  scale_fill_manual(values = c("darkgoldenrod3", "darkolivegreen4", breaks = c("Adult", "SubAdult"))) +
+  coord_flip() +
+  labs(fill = "Life-stage",
+       title = "Lakes with the highest numbers of mountain yellow-legged frog",
+       x = NULL,
+       y = "Count")+
+  theme_minimal() +
+  theme(legend.position = c(0.85,0.25))+
+  theme(panel.border = element_rect(colour = "black", fill=NA, size=0.5))
+  
+#lake_plot
+```
+### Final plot for mountain yellow-legged frog using `patchwork`
+
+```{r, fig.cap="Figure 1. Plot of counts of mountain yellow legged frogs, by year and life-stage, as well as by top 5 lakes with the highest total counts of adults in subadults. In the upper plots, the different colors of bars display different years. In the lower plot, green depicts total counts through all years for subadults and yellow depicts total counts through all years for adults in each lake surveyed"}
+
+ramu_plot / lake_plot
+
+```
+
+
+

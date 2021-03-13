@@ -14,5 +14,4 @@ output:
   postcards::trestles
 site: distill::distill_website
 ---
- 
 Graduate student studying water resources management at the Bren School of Environmental Science and Management. Data scientist. Outdoor enthusiast. Lover of nature. Crafter of knitted and baked goods. Mediocre player of ukulele. Dog mom.
