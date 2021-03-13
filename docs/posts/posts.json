@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2021-03-13-animated-plot/",
+    "title": "Animated plot",
+    "description": "A plot of plastic use by country",
+    "author": [
+      {
+        "name": "Janelle C",
+        "url": {}
+      }
+    ],
+    "date": "2021-03-13",
+    "categories": [],
+    "contents": "\r\nAlthough this plot isn’t “polished,” it was my first contribution to a Tidy Tuesday, which I partake in to continue my learning in R.\r\n Top 10 countries and their plastic use (pieces of plastic found during cleanups) in 2019 and 2020.\r\n\r\n\r\n\r\n",
+    "preview": {},
+    "last_modified": "2021-03-13T12:31:23-08:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/2021-02-22-spatial-analysis-of-species-richness/",
     "title": "Spatial Analysis Using Raster Data",
     "description": "Species richness of cetaceans along the California coast.",
@@ -45,9 +62,9 @@
     ],
     "date": "2021-01-22",
     "categories": [],
-    "contents": "\r\nIntroduction\r\nThis data explores different types of cheese, comparing them on the basis of fat, protein, sugar, carbohydrates, fiber and calories. Data includes nutrient information from the USDA, but was filtered to only show comparisons between a few variables. This data is looked at on a PCA biplot, to see patterns in nutrients in cheese, and look for clusters of data to then be able to explore these comparisons further. Data taken from FoodData Central.\r\n\r\nRead in and clean data\r\n\r\n\r\n\r\nPCA Biplot\r\n\r\n\r\n\r\nSummary\r\nThis biplot shows that 42.88% of the variation in the data can be seen on the principal component 1 axis (PC1), and 21.04% on PC2. In addition, other takeaways are:\r\nIn cheese, fat and calories are highly related, they are nearly pointing the same direction and their arrow lengths are also almost the same. The differences in the lengths of the arrows mean that there is slightly less variation explained for fat than calories along PC1.\r\nThere is a cluster of cheeses that exist between protein, fat and energy. If I were to explore this data further, I would want to look into what those cheeses are and potentially make further conclusions about how and why they are grouped together.\r\nProtein and sugar have a negative correlation, shown by the arrows pointing opposite directions.\r\nFiber and carbohydrates have nearly a no relation to each other at all, shown by the 90 degree angle between their arrows.\r\n\r\n\r\n\r\n",
+    "contents": "\r\nIntroduction\r\nThis data explores different types of cheese, comparing them on the basis of fat, protein, sugar, carbohydrates, fiber and calories. Data includes nutrient information from the USDA, but was filtered to only show comparisons between a few variables. This data is looked at on a PCA biplot, to see patterns in nutrients in cheese, and look for clusters of data to then be able to explore these comparisons further. Data taken from FoodData Central.\r\n\r\nRead in and clean data\r\n\r\n\r\nhide\r\n\r\ncheese_df <- read_csv(\"usda_nutrients.csv\") %>% \r\n  clean_names() %>% \r\n  filter(str_detect(short_descrip, \"^CHEESE,\")) %>% \r\n  separate(descrip, into = c(\"cheese\", \"cheese_type\"), sep = \"Cheese, \") %>%\r\n  select(!c(ends_with(\"_usrda\"), cheese)) %>% \r\n  select(cheese_type, ends_with(c(\"_g\", \"_kcal\"))) %>% #, \"_mg\", \"_mcg\"\r\n  rename(\"Protein (g)\" = \"protein_g\", \"Energy (kcal)\" = \"energy_kcal\", \"Fat (g)\" = \"fat_g\", \"Sugar (g)\" = \"sugar_g\", \"Carb (g)\" = \"carb_g\", \"Fiber (g)\" = \"fiber_g\") %>% \r\n  drop_na()\r\n\r\ncheese_pca <- cheese_df %>% \r\n  drop_na() %>%\r\n  select(-cheese_type) %>% \r\n  scale() %>% \r\n  prcomp()\r\n\r\n\r\n\r\nPCA Biplot\r\n\r\n\r\nhide\r\n\r\nautoplot(cheese_pca,\r\n         data = cheese_df, #requires the u in colour\r\n         loadings = TRUE,\r\n         loadings.label = TRUE,\r\n         loadings.label.vjust = -0.9,\r\n         loadings.label.hjust = 1,\r\n         loadings.colour = \"orange1\",\r\n         loadings.label.colour = \"orange1\",\r\n         loadings.label.repel = TRUE) +\r\n  theme_minimal() \r\n\r\n\r\n\r\n\r\nSummary\r\nThis biplot shows that 42.88% of the variation in the data can be seen on the principal component 1 axis (PC1), and 21.04% on PC2. In addition, other takeaways are:\r\nIn cheese, fat and calories are highly related, they are nearly pointing the same direction and their arrow lengths are also almost the same. The differences in the lengths of the arrows mean that there is slightly less variation explained for fat than calories along PC1.\r\nThere is a cluster of cheeses that exist between protein, fat and energy. If I were to explore this data further, I would want to look into what those cheeses are and potentially make further conclusions about how and why they are grouped together.\r\nProtein and sugar have a negative correlation, shown by the arrows pointing opposite directions.\r\nFiber and carbohydrates have nearly a no relation to each other at all, shown by the 90 degree angle between their arrows.\r\n\r\n\r\n\r\n",
     "preview": "posts/2021-03-13-pca-analysis/pca-analysis_files/figure-html5/unnamed-chunk-2-1.png",
-    "last_modified": "2021-03-13T12:10:57-08:00",
+    "last_modified": "2021-03-13T12:28:34-08:00",
     "input_file": {}
   },
   {
